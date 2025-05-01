@@ -6,6 +6,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from djangoProject import settings
+
 
 class User(AbstractUser):
 
@@ -50,7 +52,7 @@ class Article(models.Model):
     views = models.IntegerField(default=0)
     likes = models.IntegerField(default=0)
     top_flag = models.BooleanField(default=False)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='articles')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='articles', verbose_name='作者')
     categories = models.ManyToManyField('Category', related_name='articles', blank=True)
     tags = models.ManyToManyField('Tag', related_name='articles', blank=True)
 
@@ -90,12 +92,14 @@ class Comment(models.Model):
         related_name='comments'
     )
     user = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='comments'
     )
     content = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True,
+                                      verbose_name='创建时间'
+                                      )
     parent = models.ForeignKey(
         'self',
         null=True,

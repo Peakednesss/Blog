@@ -94,9 +94,13 @@ class TagViewSet(viewsets.ModelViewSet):
 
 # 评论视图集
 class CommentViewSet(viewsets.ModelViewSet):
-    queryset = Comment.objects.select_related('article', 'user').all()
+    # queryset = Comment.objects.select_related('article', 'user').all()
     serializer_class = CommentSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        user_id = self.kwargs['pk']
+        return Comment.objects.filter(article_id=user_id)
 
     def perform_create(self, serializer):
         article = serializer.validated_data['article']

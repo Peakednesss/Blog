@@ -68,7 +68,8 @@ class RecursiveField(serializers.Serializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField()  # 显示用户名
+    # user = serializers.StringRelatedField()  # 显示用户名
+    user = UserSerializer(read_only=True)
     replies = RecursiveField(many=True, read_only=True)
 
     parent = serializers.PrimaryKeyRelatedField(

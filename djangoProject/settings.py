@@ -131,7 +131,9 @@ DATABASES = {
         'PASSWORD': 'jxq249055',  # 替换为你的 MySQL 密码
         'HOST': 'localhost',
         'PORT': '3306',
-        'OPTIONS': {'charset': 'utf8mb4'},
+        'OPTIONS': {'charset': 'utf8mb4',
+                    'init_command': 'SET foreign_key_checks=OFF',
+                    },
     }
 }
 
@@ -160,7 +162,7 @@ AUTH_USER_MODEL = 'blog.User'
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
