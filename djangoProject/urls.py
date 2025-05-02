@@ -19,10 +19,12 @@ from django.conf.urls.static import static
 from django.urls import include, path
 
 from django.contrib import admin
+from rest_framework_simplejwt.views import TokenRefreshView
 
 from djangoProject import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/", include("blog.urls")),  # 将 blog 应用的路由挂载到 /api/ 路径下
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # [1,6](@ref)

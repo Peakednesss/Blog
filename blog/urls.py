@@ -2,6 +2,7 @@
 from django.conf.urls.static import static
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from rest_framework_simplejwt.views import TokenRefreshView
 
 from djangoProject import settings
 from .views import (
@@ -38,7 +39,7 @@ urlpatterns = [
     path('comments/', CommentViewSet.as_view({'post': 'create'}), name='comment'),
 
     # path('users/<string:pk>/', UserViewSet.as_view({'get': 'retrieve'}), name='user-list'),
-
+    path('auth/refresh/', TokenRefreshView.as_view()),  # JWT刷新接口
 
     path("register/", register, name="register"),
     path("login/", LoginView.as_view(), name="login"),

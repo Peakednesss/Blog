@@ -33,7 +33,7 @@ from rest_framework.exceptions import ValidationError
 from .models import Article, User, Category, Tag, Comment
 from .serializers import ArticleSerializer, UserSerializer, CategorySerializer, TagSerializer, CommentSerializer
 
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django.core.files.storage import FileSystemStorage
 
@@ -117,6 +117,7 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 
 @api_view(['POST'])
+@permission_classes([AllowAny])  # 新增权限豁免
 def register(request):
     serializer = UserSerializer(data=request.data, context={'request': request})
     if serializer.is_valid():
