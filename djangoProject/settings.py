@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # 定义媒体文件的存储路径（指向 avatars 文件夹）
 MEDIA_ROOT = os.path.join(BASE_DIR, 'avatars')  # [1,6](@ref)
-MEDIA_URL = '/media/'
+MEDIA_URL = '/avatars/'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 

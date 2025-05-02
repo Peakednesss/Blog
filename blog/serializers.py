@@ -23,10 +23,10 @@ class UserSerializer(serializers.ModelSerializer):
         # Handle file upload
         if 'avatar' in self.context['request'].FILES:
             avatar_file = self.context['request'].FILES['avatar']
-            fs = FileSystemStorage(location='avatars/')
-            filename = fs.save(avatar_file.name, avatar_file)
-            uploaded_file_url = fs.url(filename)
-            user.avatar = uploaded_file_url
+            # fs = FileSystemStorage(location='avatars/')
+            # filename = fs.save(avatar_file.name, avatar_file)
+            # uploaded_file_url = fs.url(filename)
+            user.avatar = avatar_file
         user.save()
 
         return user

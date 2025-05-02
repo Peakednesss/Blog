@@ -24,7 +24,6 @@ router = DefaultRouter()
 router.register(r'users', UserViewSet)           # 用户相关 API
 router.register(r'categories', CategoryViewSet)  # 分类相关 API
 router.register(r'tags', TagViewSet)            # 标签相关 API
-# router.register(r'comments', CommentViewSet, basename='comment')
 
 # 配置 URL 模式
 urlpatterns = [
