@@ -30,8 +30,9 @@
 from rest_framework import generics, permissions, viewsets, status
 from rest_framework.exceptions import ValidationError
 
-from .models import Article, User, Category, Tag, Comment
-from .serializers import ArticleSerializer, UserSerializer, CategorySerializer, TagSerializer, CommentSerializer
+from .models import Article, User, Category, Tag, Comment, Message
+from .serializers import (ArticleSerializer, UserSerializer, CategorySerializer, TagSerializer, CommentSerializer,
+                          MessageSerializer)
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
@@ -39,7 +40,7 @@ from django.core.files.storage import FileSystemStorage
 
 from rest_framework.views import APIView
 
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 import logging
@@ -159,3 +160,21 @@ class LoginView(APIView):
             return Response({'detail': 'Invalid credentials'}, status=401)
 
 
+class GetMessageList(APIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get(self, request, format=None):
+        messages = Message.objects.all().order_by('-created_at')
+        serializer = MessageSerializer(messages, many=True, context={'request': request})
+        return Response(serializer.data)
+
+
+class CreateMessage(APIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def post(self, request, format=None):
+        serializer = MessageSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)

@@ -1,6 +1,6 @@
 from django.core.files.storage import FileSystemStorage
 from rest_framework import serializers
-from .models import User, Article, Category, Tag, Comment
+from .models import User, Article, Category, Tag, Comment, Message
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -30,6 +30,26 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
+
+
+class MessageSerializer(serializers.ModelSerializer):
+    # userAvatar = serializers.SerializerMethodField()
+    # userName = serializers.SerializerMethodField()
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Message
+        fields = ['id', 'user', 'content', 'created_at']
+
+    # def get_userName(self, obj):
+    #     return obj.user.username
+    #
+    # def get_userAvatar(self, obj):
+    #     request = self.context.get('request')
+    #     if obj.user.avatar and hasattr(obj.user.avatar, 'url'):
+    #         avatar_url = obj.user.avatar.url
+    #         return request.build_absolute_uri(avatar_url)
+    #     return None
 
 
 class CategorySerializer(serializers.ModelSerializer):

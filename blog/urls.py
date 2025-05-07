@@ -14,7 +14,7 @@ from .views import (
     register,
     LoginView,
     ArticleDetailView,
-    UserArticleListView
+    UserArticleListView, GetMessageList, CreateMessage
 )
 
 # 创建一个路由器实例
@@ -42,6 +42,8 @@ urlpatterns = [
 
     path("register/", register, name="register"),
     path("login/", LoginView.as_view(), name="login"),
+    path('messages/', GetMessageList.as_view(), name='get_messages'),
+    path('messages/create/', CreateMessage.as_view(), name='create_message'),
     path('', include(router.urls)),  # 包含 DRF 自动生成的路由
 
 
